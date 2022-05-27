@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0-oas3
+  title: Beenia
+  description: ''
+servers:
+  - url: https://virtserver.swaggerhub.com/truth4you/beenia/1.0.0
+paths:
+  /api/data:
+    get:
+      tags:
+        - weather data
+      summary: Load today's weather data from database
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  temperature_max:
+                    type: number
+                  temperature_min:
+                    type: number
+                  wind_speed_max:
+                    type: number
+                  wind_speed_min:
+                    type: number
+                  precipitation:
+                    type: number
+                  snowfraction:
+                    type: number
+  /api/data/{date}:
+    get:
+      tags:
+        - weather data
+      summary: Load date filtered weather data from database
+      parameters:
+        - name: date
+          in: path
+          description: Date to filter
+          required: true
+          schema:
+            type: string
+            format: yyyy-mm-dd
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  temperature_max:
+                    type: number
+                  temperature_min:
+                    type: number
+                  wind_speed_max:
+                    type: number
+                  wind_speed_min:
+                    type: number
+                  precipitation:
+                    type: number
+                  snowfraction:
+                    type: number
+  /api/data/{date}/{hour}:
+    get:
+      tags:
+        - weather data
+      summary: Load date and time filtered weather data from database
+      parameters:
+        - name: date
+          in: path
+          description: Date to filter
+          required: true
+          schema:
+            type: string
+            format: yyyy-mm-dd
+        - name: hour
+          in: path
+          description: Hour of filter
+          required: true
+          schema:
+            type: integer
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  temperature:
+                    type: number
+                  wind_speed:
+                    type: number
+                  wind_direction:
+                    type: number
+                  precipitation:
+                    type: number
+                  snowfraction:
+                    type: number
+  /api/shoes/{date}:
+    get:
+      tags:
+        - recommends
+      summary: Recommends shoes for a day
+      parameters:
+        - name: date
+          in: path
+          description: Date to recommend
+          required: true
+          schema:
+            type: string
+            format: yyyy-mm-dd
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  recommends:
+                    type: string
+  /api/things/{date}:
+    get:
+      tags:
+        - recommends
+      summary: Recommends things for a day
+      parameters:
+        - name: date
+          in: path
+          description: Date to recommend
+          required: true
+          schema:
+            type: string
+            format: yyyy-mm-dd
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  recommends:
+                    type: string
+  /api/wind/chill/{temperature}/{windSpeed}:
+    get:
+      tags:
+        - calculate wind chill
+      summary: Calculate WCV
+      parameters:
+        - name: temperature
+          in: path
+          description: Temperature
+          required: true
+          schema:
+            type: number
+        - name: windSpeed
+          in: path
+          description: Speed of wind
+          required: true
+          schema:
+            type: number
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  wind_chill:
+                    type: number
+components: {}
+  
